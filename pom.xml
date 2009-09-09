@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>swank-clojure</groupId>
+  <artifactId>swank-clojure</artifactId>
+  <version>1.0</version>
+  <packaging>jar</packaging>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>compile-clojure-sources</id>
+            <phase>compile</phase>
+            <configuration>
+              <tasks>
+                <echo message="COMPILE" />
+                <mkdir dir="target/classes" />
+                <property name="compile.classpath" refid="maven.compile.classpath" />
+                <java classname="clojure.lang.Compile"
+                  classpath="${compile.classpath}:./" failonerror="true" fork="true">
+                  <sysproperty key="clojure.compile.path" value="target/classes" />
+                  <arg value="swank.commands.completion" />
+                  <arg value="swank.commands.contrib.swank-fuzzy" />
+                  <arg value="swank.commands.import" />
+                  <arg value="swank.util.java" />
+                  <arg value="swank.util.string" />
+                  <arg value="swank.clj-contrib.macroexpand" />
+                  <arg value="swank.loader" />
+                  <arg value="swank.clj-contrib.pprint" />
+                  <arg value="swank.commands.basic" />
+                  <arg value="swank.commands.contrib.swank-c-p-c" />
+                  <arg value="swank.commands.contrib" />
+                  <arg value="swank.commands.indent" />
+                  <arg value="swank.commands.inspector" />
+                  <arg value="swank.commands" />
+                  <arg value="swank.commands.contrib.swank-arglists" />
+                  <arg value="swank.core.connection" />
+                  <arg value="swank.core.hooks" />
+                  <arg value="swank.core.protocol" />
+                  <arg value="swank.core.server" />
+                  <arg value="swank.core.threadmap" />
+                  <arg value="swank.core" />
+                  <arg value="swank.swank" />
+                  <arg value="swank.util.clojure" />
+                  <arg value="swank.util.concurrent.mbox" />
+                  <arg value="swank.util.concurrent.thread" />
+                  <arg value="swank.util.hooks" />
+                  <arg value="swank.util.io" />
+                  <arg value="swank.util.net.sockets" />
+                  <arg value="swank.util.string" />
+                  <arg value="swank.util.sys" />
+                  <arg value="swank.util" />
+                </java>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.clojure</groupId>
+      <artifactId>clojure</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+  </dependencies>
+</project>
