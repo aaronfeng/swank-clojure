@@ -1,0 +1,7 @@
+Compile jar with maven:
+  mvn assembly:assembly
+
+Got Problems?
+
+  aaron.feng@gmail.com
+  http://twitter.com/aaronfeng
